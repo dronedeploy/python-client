@@ -194,7 +194,8 @@ class LDClient(object):
         return self._config.offline
 
     def is_initialized(self):
-        return self.is_offline() or self._config.use_ldd or self._update_processor.initialized()
+        flags_in_redis = self._store.all()
+        return self.is_offline() or self._config.use_ldd or self._update_processor.initialized() or (self._store.initialized() and flags_in_redis and len(flags_in_redis) > 0)
 
     def flush(self):
         if self._config.offline or not self._config.events_enabled:
