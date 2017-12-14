@@ -195,6 +195,8 @@ class LDClient(object):
 
     def is_initialized(self):
         flags_in_redis = self._store.all()
+        if (self._store.initialized() and flags_in_redis and len(flags_in_redis) > 0):
+            print "store initalized and data in redis"
         return self.is_offline() or self._config.use_ldd or self._update_processor.initialized() or (self._store.initialized() and flags_in_redis and len(flags_in_redis) > 0)
 
     def flush(self):

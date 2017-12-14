@@ -26,16 +26,16 @@ class StreamingUpdateProcessor(Thread, UpdateProcessor):
         hdrs = _stream_headers(self._sdk_key)
         uri = self._config.stream_uri
         while self._running:
-            try:
-                messages = SSEClient(uri, verify=self._config.verify_ssl, headers=hdrs)
-                for msg in messages:
-                    if not self._running:
-                        break
-                    self.process_message(self._store, self._requester, msg, self._ready)
-            except Exception as e:
-                log.error("Could not connect to LaunchDarkly stream: " + str(e.message) +
-                          " waiting 1 second before trying again.")
-                time.sleep(1)
+            # try:
+            #     messages = SSEClient(uri, verify=self._config.verify_ssl, headers=hdrs)
+            #     for msg in messages:
+            #         if not self._running:
+            #             break
+            #         self.process_message(self._store, self._requester, msg, self._ready)
+            # except Exception as e:
+            #     log.error("Could not connect to LaunchDarkly stream: " + str(e.message) +
+            #               " waiting 1 second before trying again.")
+            #     time.sleep(1)
 
     def stop(self):
         log.info("Stopping StreamingUpdateProcessor")
